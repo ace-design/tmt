@@ -8,7 +8,7 @@ spring:
 
 logging.level:
   ca.mcmaster.cas735.tmt.hrm_receiver:
-    adapter: DEBUG
+    adapter:  INFO # DEBUG for fine-grained trace
     business: INFO
 
 server:

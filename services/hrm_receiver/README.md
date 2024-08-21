@@ -50,93 +50,93 @@ flowchart LR
 classDiagram
 
 
-    namespace InboundPorts {
-        class SenMLReceiver {
-            <<Interface>>
-            + receive(data: SenML)
-        }
-
-        class FilterManagement {
-            <<Interface>>
-            + register(deviceId: String)
-            + unregister(deviceId: String)
-        }
+  namespace InboundPorts {
+    class SenMLReceiver {
+      <<Interface>>
+      + receive(data: SenML)
     }
 
-    namespace InboundAdapters {
-        class MQTTReceiver {
-            + handler(): MessageHandler
-            + mqttInputChannel(): MessageChannel
-            + inbound(): MessageProducer
-        }
+    class FilterManagement {
+      <<Interface>>
+      + register(deviceId: String)
+      + unregister(deviceId: String)
+    }
+  }
 
-        class AMQPListener {
-            +listen(data: String)
-        }
+  namespace InboundAdapters {
+    class MQTTReceiver {
+      + handler(): MessageHandler
+      + mqttInputChannel(): MessageChannel
+      + inbound(): MessageProducer
     }
 
-    namespace OutboundPorts {
-        class PulseSender {
-            <<Interface>>
-            + send(pulse: Pulse)
-        }
+    class AMQPListener {
+      +listen(data: String)
+    }
+  }
+
+  namespace OutboundPorts {
+    class PulseSender {
+      <<Interface>>
+      + send(pulse: Pulse)
+    }
+  }
+
+  namespace OutboundAdapters {
+    class AMQPSender {
+      + outbound(): TopicExchange
+    }
+  }
+
+  namespace Business {
+    class Translator {
     }
 
-    namespace OutboundAdapters {
-        class AMQPSender {
-
-        }
+    class Filter {
     }
 
-    namespace Business {
-        class Translator {
-        }
-
-        class Filter {
-        }
-
-        class SenMLFilter {
-            <<Interface>>
-            + keep(deviceId: String): Boolean
-        }
-
+    class SenMLFilter {
+      <<Interface>>
+      + keep(deviceId: String): Boolean
     }
 
-
-    class SenML {
-        <<DTO>>
-        + n: String
-        + u: String
-        + t: Int
-        + v: Float
-    }
-
-    class FilterRequest {
-        <<DTO>>
-        + verb: String
-        + parameter: String
-    }
-
-    class Pulse {
-        <<DTO>>
-        + deviceId: String
-        + timestamp: Int
-        + beat: Float
-    }
+  }
 
 
+  class SenML {
+    <<DTO>>
+    + n: String
+    + u: String
+    + t: Int
+    + v: Float
+  }
 
-    SenMLReceiver <|.. Translator
-    Translator --> SenMLFilter
-    FilterManagement <|.. Filter
-    SenMLFilter <|.. Filter
-    MQTTReceiver --> SenMLReceiver
-    AMQPListener --> FilterManagement
-    PulseSender <|.. AMQPSender
-    Translator --> PulseSender
-    SenML <.. SenMLReceiver
-    Pulse <.. PulseSender
-    FilterRequest <.. AMQPListener
+  class FilterRequest {
+    <<DTO>>
+    + verb: String
+    + parameter: String
+  }
+
+  class Pulse {
+    <<DTO>>
+    + deviceId: String
+    + timestamp: Int
+    + beat: Float
+  }
+
+
+
+  SenMLReceiver <|.. Translator
+  Translator --> SenMLFilter
+  FilterManagement <|.. Filter
+  SenMLFilter <|.. Filter
+  MQTTReceiver --> SenMLReceiver
+  AMQPListener --> FilterManagement
+  PulseSender <|.. AMQPSender
+  Translator --> PulseSender
+  SenML <.. SenMLReceiver
+  Pulse <.. PulseSender
+  FilterRequest <.. AMQPListener
 ```
 
 ## How to use locally

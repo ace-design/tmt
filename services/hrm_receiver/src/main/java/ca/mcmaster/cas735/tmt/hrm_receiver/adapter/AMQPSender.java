@@ -30,8 +30,8 @@ public class AMQPSender implements PulseSender {
     }
 
     @Bean
-    TopicExchange directExchange() {
-        // this will create the outbound exchange if it does not exists
+    public TopicExchange outbound() {
+        // this will create the outbound exchange if it does not exist
         return new TopicExchange(exchange);
     }
 
