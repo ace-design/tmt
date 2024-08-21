@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: hrm-receiver
+
+  rabbitmq:
+    username: admin
+    password: cas735
+
+logging.level:
+  ca.mcmaster.cas735.tmt.hrm_receiver:
+    adapter: DEBUG
+    business: INFO
+
+server:
+  port: 9080
+
+app:
+  custom:
+    mqtt:
+      port: 1883
+      topic: tmt_hrm
+    messaging:
+      inbound-exchange-topic: hrm.filter
+      outbound-exchange-topic: heartbeat
+
+management:
+  info:
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: info,health
+      base-path: /actuator
+
+info:
+  application:
+    description: '@project.description@'
+    version:     '@project.version@'
+
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+  

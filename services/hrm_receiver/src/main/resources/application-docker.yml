@@ -1,0 +1,21 @@
+# Overriding configuration when started in docker mode
+# to start in local mode with maven: -Dspring-boot.run.profiles=docker
+
+spring:
+  rabbitmq:
+    host: rabbitmq
+
+app:
+  custom:
+    mqtt:
+      host: rabbitmq
+
+
+info:
+  application:
+    name: '@project.name@ (docker deployment)'
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://service-registry:8761/eureka/

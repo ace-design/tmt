@@ -1,0 +1,23 @@
+flowchart LR
+
+    MQTT([fa:fa-circle-right MQTT fa:fa-envelope\n tmt_hrm])
+    AMQP_IN([fa:fa-circle-right AMQP fa:fa-envelope\n hrm.filter])
+
+    AMQP_OUT([fa:fa-envelope AMQP fa:fa-circle-right\nheartbeat])
+
+
+    subgraph "<< service >>"
+        SENML_RECEIVER("<< InputPort >>\nSenML Receiver")
+        FILTRABLE("<< InputPort >>\n Filter\nManagement")
+        SERVICE{{"\nHRM\nReceiver\n<br>"}}
+        HRM_SENDER("<< OutputPort >>\nPulse Sender")
+    end
+
+    MQTT -- SenML--> SENML_RECEIVER
+    AMQP_IN -- FilterRequest--> FILTRABLE
+
+    FILTRABLE -. offered .- SERVICE
+    SENML_RECEIVER -. offered .- SERVICE
+
+    SERVICE -. required .- HRM_SENDER
+    HRM_SENDER -- Pulse --> AMQP_OUT

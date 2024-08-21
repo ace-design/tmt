@@ -1,0 +1,20 @@
+# Overriding configuration when started in local mode 
+# to start in local mode with maven: -Dspring-boot.run.profiles=local
+
+spring:
+  rabbitmq:
+    host: localhost
+
+app:
+  custom:
+    mqtt:
+      host: localhost
+
+info:
+  application:
+    name: '@project.name@ (local deployment)'
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

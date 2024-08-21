@@ -1,0 +1,18 @@
+
+include:
+  # Loading the technical infrastructure
+  - ./../infrastructure/docker-compose.yml
+
+services:
+
+  hrm-receiver:
+    container_name: hrm-receiver
+    build:
+      context: ../services/hrm_receiver
+    ports:
+      - "9080:9080"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      service-registry:
+        condition: service_healthy

@@ -1,0 +1,33 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: The Maroon Theory
+message: CAS 735 example architecture
+type: software
+authors:
+  - given-names: Sébastien
+    family-names: Mosser
+    email: mossers@mcmaster.ca
+    affiliation: McMaster University / McSCert
+    orcid: 'https://orcid.org/0000-0001-9769-216X'
+  - orcid: 'https://orcid.org/0000-0001-8117-2848'
+    email: schankuc@mcmaster.ca
+    affiliation: McMaster University
+    given-names: Christopher
+    family-names: Schankula
+  - name: McMaster Centre for Software Certification (McSCert)
+    address: 1280 Main Street West
+    city: Hamilton
+    country: CA
+    post-code: L8S 4K1
+    location: ITB 101
+repository-code: 'https://github.com/ace-design/tmt'
+abstract: >-
+  The Maroon Theory (TMT) is a reference microservice
+  architecture developed as an Open Education Resource (OER)
+  to support CAS 735 at McMaster.
+keywords:
+  - microservices
+  - pedagogical
+license: MIT

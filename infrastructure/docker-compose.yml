@@ -1,0 +1,18 @@
+include:
+  # Loading the message broker standalone deployment 
+  - ./message_broker/docker-compose.yml
+
+services:
+
+  service-registry:
+      container_name: service-registry
+      build:
+        context: ./service_registry
+      ports:
+        - "8761:8761"
+      healthcheck:
+        test: curl -f http://localhost:8761
+        start_period: 3s
+        interval: 1s
+        timeout: 1s
+        retries: 10

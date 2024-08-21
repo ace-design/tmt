@@ -1,0 +1,27 @@
+# Docker compose file configuring the message broker
+# source: https://github.com/mpolinowski/rabbitmq-mqtt-ws-docker/blob/master/docker-compose.yml
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "5672:5672"
+      - "8080:15672"
+    command: "/bin/bash -c \"rabbitmq-plugins enable --offline rabbitmq_mqtt; rabbitmq-server\""
+    env_file:
+      - ./_login.env
+    volumes:
+      - type: bind
+        source: ./_rabbitmq.conf
+        target: /etc/rabbitmq/rabbitmq.conf
+        read_only: true
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      start_period: 5s
+      interval: 1s
+      timeout: 1s
+      retries: 10

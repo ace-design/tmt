@@ -1,0 +1,98 @@
+classDiagram
+
+
+    namespace InboundPorts {
+        class SenMLReceiver {
+            <<Interface>>
+            + receive(data: SenML)
+        }
+
+        class FilterManagement {
+            <<Interface>>
+            + register(deviceId: String)
+            + unregister(deviceId: String)
+        }
+    }
+
+    namespace InboundAdapters {
+        class MQTTReceiver {
+            + handler(): MessageHandler
+            + mqttInputChannel(): MessageChannel
+            + inbound(): MessageProducer
+        }
+
+        class AMQPListener {
+            +listen(data: String)
+        }
+    }
+
+    namespace OutboundPorts {
+        class PulseSender {
+            <<Interface>>
+            + send(pulse: Pulse)
+        }
+    }
+
+    namespace OutboundAdapters {
+        class AMQPSender {
+
+        }
+    }
+
+    namespace Business {
+        class Translator {
+        }
+
+        class Filter {
+        }
+
+        class SenMLFilter {
+            <<Interface>>
+            + keep(deviceId: String): Boolean
+        }
+
+    }
+
+
+    class SenML {
+        <<DTO>>
+        + n: String
+        + u: String
+        + t: Int
+        + v: Float
+    }
+
+    class FilterRequest {
+        <<DTO>>
+        + verb: String
+        + parameter: String
+    }
+
+    class Pulse {
+        <<DTO>>
+        + deviceId: String
+        + timestamp: Int
+        + beat: Float
+    }
+
+
+
+    SenMLReceiver <|.. Translator
+    Translator --> SenMLFilter
+    FilterManagement <|.. Filter
+    SenMLFilter <|.. Filter
+    MQTTReceiver --> SenMLReceiver
+    AMQPListener --> FilterManagement
+    PulseSender <|.. AMQPSender
+    Translator --> PulseSender
+    SenML <.. SenMLReceiver
+    Pulse <.. PulseSender
+    FilterRequest <.. AMQPListener
+
+
+
+
+
+
+
+
