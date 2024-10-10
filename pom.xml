@@ -16,6 +16,8 @@
         <module>infrastructure/service_registry</module>
         <!-- Business Services -->
         <module>services/hrm_receiver</module>
+        <module>services/customers</module>
+        <module>services/workouts</module>
     </modules>
 
 </project>

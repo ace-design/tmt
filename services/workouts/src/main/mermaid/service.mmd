@@ -1,0 +1,40 @@
+flowchart LR
+
+
+    HTTP3([HTTP\n/verbs/*])
+    HTTP4([HTTP\n/hateoas/*])
+
+
+    subgraph "<< service >>"
+        CustomerManagement("<< InputPort >>\nCustomer\nManagement")
+        CustomerLookup("<< InputPort >>\n Customer\nLookup")
+        WorkoutManagement("<< InputPort >>\n Workout\nManagement")
+        SERVICE{{"\nCustomers\n<br>"}}
+        Database("<< OutputPort >>\nCustomer Data\nRepository")
+        DatabaseW("<< OutputPort >>\nWorkout Data\nRepository")
+    end
+
+
+    HTTP3 -- Level 3 --> CustomerManagement
+    HTTP4 -- Level 4 --> CustomerManagement
+
+    %% invisible link for layout purposes
+    HTTP4 ~~~ HTTP3
+
+    HTTP3 -- Level 3--> CustomerLookup
+    HTTP4 -- Level 4 --> CustomerLookup
+
+
+    HTTP4 -- Level 4 --> WorkoutManagement
+    HTTP3 -- Level 3 --> WorkoutManagement
+
+    h2[(\nSQL\n\nH2\nDatabase)]
+
+    CustomerManagement -. offered .- SERVICE
+    CustomerLookup -. offered .- SERVICE
+    WorkoutManagement -. offered .- SERVICE
+
+    SERVICE -. required .- Database
+    SERVICE -. required .- DatabaseW
+    Database --> h2
+    DatabaseW --> h2

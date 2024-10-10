@@ -3,6 +3,9 @@ include:
   # Loading the technical infrastructure
   - ./../infrastructure/docker-compose.yml
 
+
+
+
 services:
 
   hrm-receiver:
@@ -14,5 +17,19 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+      service-registry:
+        condition: service_healthy
+
+  customers:
+    container_name: customers
+    build:
+      context: ../services/customers
+    ports:
+      - "9090:9090"
+    volumes:
+      - type: bind
+        source: ${PWD}/data
+        target: /data
+    depends_on:
       service-registry:
         condition: service_healthy

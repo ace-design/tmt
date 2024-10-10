@@ -1,8 +1,12 @@
 FROM amazoncorretto:21-alpine
 
 LABEL org.opencontainers.image.authors="mossers"
-LABEL description="Image for the HRM Receiver microservice"
-EXPOSE 9080
+LABEL description="Image for the Customer microservice"
+
+
+RUN mkdir /data
+VOLUME /data
+EXPOSE 9090
 
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar

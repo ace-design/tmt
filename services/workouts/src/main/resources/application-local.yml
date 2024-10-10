@@ -1,0 +1,18 @@
+# Overriding configuration when started in local mode 
+# to start in local mode with maven: -Dspring-boot.run.profiles=local
+
+spring:
+  ## Data repository configuration
+  datasource:
+    url: jdbc:h2:mem:mydb # in memory database when used locally
+  h2.console:
+    enabled: true # expose database web UI for debugging purposes
+
+info:
+  application:
+    name: '@project.name@ (local deployment)'
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
